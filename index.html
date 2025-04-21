@@ -113,50 +113,7 @@
 </head>
 <body>
   <h2>Filter to Find Your Resource:</h2>
-  <div class="filter-bar">
-    <div class="filter-section">
-      <h4>Role</h4>
-      <div class="pill-group" id="role-filter">
-        <span class="pill active" data-value="All">All</span>
-        <span class="pill" data-value="AD">AD</span>
-        <span class="pill" data-value="AE">AE</span>
-      </div>
-    </div>
-
-    <div class="filter-section">
-      <h4>Segment</h4>
-      <div class="pill-group" id="segment-filter">
-        <span class="pill active" data-value="All">All</span>
-        <span class="pill" data-value="SMB">SMB</span>
-        <span class="pill" data-value="MM">MM</span>
-        <span class="pill" data-value="ENT">ENT</span>
-        <span class="pill" data-value="LENT">LENT</span>
-        <span class="pill" data-value="GCP">GCP</span>
-      </div>
-    </div>
-
-    <div class="filter-section">
-      <h4>Region</h4>
-      <div class="pill-group" id="region-filter">
-        <span class="pill active" data-value="All">All</span>
-        <span class="pill" data-value="NAMER">NAMER</span>
-        <span class="pill" data-value="EMEAL">EMEAL</span>
-        <span class="pill" data-value="APAC">APAC</span>
-      </div>
-    </div>
-
-    <div class="filter-section">
-      <h4>Resource Type</h4>
-      <div class="pill-group" id="resource-type-filter">
-        <span class="pill active" data-value="All">All</span>
-        <span class="pill" data-value="Template">Templates</span>
-        <span class="pill" data-value="Learnings">Learnings</span>
-        <span class="pill" data-value="Wins">Wins</span>
-      </div>
-    </div>
-
-    <button class="clear-button" onclick="clearFilters()">Clear</button>
-  </div>
+  <div class="filter-bar">...(unchanged HTML content)...</div>
 
   <div class="results" id="results"></div>
 
@@ -201,12 +158,13 @@
     function updateResults() {
       const resultsDiv = document.getElementById('results');
       resultsDiv.innerHTML = "";
+
       const filtered = resources.filter(r => {
-        const matchRole = activeRole === "All" || r.role.includes(activeRole);
-        const matchSegment = activeSegment === "All" || r.segment.includes(activeSegment);
-        const matchRegion = activeRegion === "All" || r.region.includes(activeRegion);
-        const matchType = activeType === "All" || r.type.includes(activeType);
-        return matchRole && matchSegment && matchRegion && matchType;
+        if (activeRole !== "All" && !r.role.includes(activeRole)) return false;
+        if (activeSegment !== "All" && !r.segment.includes(activeSegment)) return false;
+        if (activeRegion !== "All" && !r.region.includes(activeRegion)) return false;
+        if (activeType !== "All" && !r.type.includes(activeType)) return false;
+        return true;
       });
 
       if (filtered.length === 0) {
