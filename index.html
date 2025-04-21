@@ -167,12 +167,11 @@
 
   <script>
     const resources = [
-      { name: "SMB Template", role: "AD", segment: "SMB", region: "NAMER", type: "Template", link: "https://linkedin.com" },
-      { name: "ENT Learnings", role: "AD", segment: "ENT", region: "EMEAL", type: "Learnings", link: "https://linkedin.com" },
-      { name: "MM Wins + Template", role: "AE", segment: "MM", region: "APAC", type: "Template", link: "https://linkedin.com" },
-      { name: "LENT Learnings", role: "AE", segment: "LENT", region: "NAMER", type: "Learnings", link: "https://linkedin.com" },
-      { name: "GCP Wins", role: "AD", segment: "GCP", region: "NAMER", type: "Wins", link: "https://linkedin.com" },
-      { name: "EMEAL AE Wins", role: "AE", segment: "MM", region: "EMEAL", type: "Wins", link: "https://linkedin.com" }
+      { name: "AD Template", role: ["AD"], segment: ["SMB", "ENT"], region: ["NAMER", "EMEAL"], type: ["Template"], link: "https://linkedin.com" },
+      { name: "AE Learnings", role: ["AE"], segment: ["MM", "LENT"], region: ["APAC"], type: ["Learnings"], link: "https://linkedin.com" },
+      { name: "GCP Multi-Type", role: ["AD"], segment: ["GCP"], region: ["NAMER"], type: ["Wins", "Learnings"], link: "https://linkedin.com" },
+      { name: "Cross-Segment Resource", role: ["AE"], segment: ["SMB", "MM", "ENT"], region: ["NAMER", "APAC"], type: ["Template"], link: "https://linkedin.com" },
+      { name: "LENT Wins", role: ["AD"], segment: ["LENT"], region: ["EMEAL"], type: ["Wins"], link: "https://linkedin.com" }
     ];
 
     let activeRole = "", activeSegment = "", activeRegion = "", activeType = "";
@@ -214,10 +213,11 @@
     function updateResults() {
       resultsDiv.innerHTML = "";
       const filtered = resources.filter(r => {
-        return (!activeRole || r.role === activeRole) &&
-               (!activeSegment || r.segment === activeSegment) &&
-               (!activeRegion || r.region === activeRegion) &&
-               (!activeType || r.type === activeType);
+        const matchRole = !activeRole || r.role.includes(activeRole);
+        const matchSegment = !activeSegment || r.segment.includes(activeSegment);
+        const matchRegion = !activeRegion || r.region.includes(activeRegion);
+        const matchType = !activeType || r.type.includes(activeType);
+        return matchRole && matchSegment && matchRegion && matchType;
       });
 
       if (filtered.length === 0) {
