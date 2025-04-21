@@ -1,219 +1,239 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Filter to Find Your Resource</title>
+  <meta charset="UTF-8">
+  <title>Resource Filter</title>
   <style>
     body {
-      font-family: sans-serif;
+      font-family: Arial, sans-serif;
       background-color: #fcfaf4;
-      padding: 20px;
+      margin: 0;
+      padding: 1rem;
     }
+
     h2 {
-      color: #0b66c2;
-    }
-    .filters {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-bottom: 20px;
-    }
-    .filter-btn {
-      border: none;
-      padding: 8px 12px;
-      border-radius: 999px;
-      cursor: pointer;
-      font-size: 14px;
-      background-color: #e8f3ff;
       color: #004184;
+      font-size: 1.25rem;
+      margin-bottom: 0.75rem;
     }
-    .filter-btn.active {
-      font-weight: bold;
-      outline: 2px solid #0b66c2;
+
+    .filter-bar {
+      display: flex;
+      flex-wrap: nowrap;
+      gap: 0.5rem;
+      background-color: #ffffff;
+      border-radius: 10px;
+      padding: 1rem;
+      border: 1px solid #e0e0e0;
     }
-    .resource-list {
+
+    .filter-section {
+      flex: 1 1 0;
+      min-width: 0;
+      background-color: #fcfaf4;
+      border-radius: 8px;
+      padding: 0.5rem;
+    }
+
+    .filter-section h4 {
+      margin: 0 0 0.3rem 0;
+      color: #004184;
+      font-size: 0.9rem;
+    }
+
+    .pill-group {
       display: flex;
       flex-wrap: wrap;
-      gap: 10px;
+      gap: 0.3rem;
     }
-    .resource-item {
-      background: none;
-      border: 1px solid #0b66c2;
-      padding: 10px 14px;
-      border-radius: 999px;
-      font-size: 14px;
-      text-decoration: none;
-      color: #0b66c2;
-      transition: background 0.2s;
+
+    .pill {
+      color: #004184;
+      padding: 0.3rem 0.6rem;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      cursor: pointer;
+      user-select: none;
+      border: none;
     }
-    .resource-item:hover {
-      background: #e8f3ff;
-    }
-    .section-label {
-      margin-top: 10px;
+
+    #segment-filter .pill:nth-child(1) { background-color: #c1edf4; }
+    #segment-filter .pill:nth-child(2) { background-color: #fbe1d9; }
+    #segment-filter .pill:nth-child(3) { background-color: #fee2bc; }
+    #segment-filter .pill:nth-child(4) { background-color: #f7eaaa; }
+    #segment-filter .pill:nth-child(5) { background-color: #daebd1; }
+
+    #region-filter .pill:nth-child(1) { background-color: #caf1b5; }
+    #region-filter .pill:nth-child(2) { background-color: #dde7f1; }
+    #region-filter .pill:nth-child(3) { background-color: #fee2bc; }
+
+    #resource-type-filter .pill:nth-child(1) { background-color: #c1edf4; }
+    #resource-type-filter .pill:nth-child(2) { background-color: #caf1b5; }
+    #resource-type-filter .pill:nth-child(3) { background-color: #fbe1d9; }
+
+    .pill.active {
+      outline: 2px solid #004184;
       font-weight: bold;
+    }
+
+    .clear-button {
+      background-color: #e0e0e0;
+      color: #333;
+      padding: 0.4rem 0.6rem;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.8rem;
+      height: fit-content;
+      align-self: flex-start;
+    }
+
+    .results {
+      margin-top: 1rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .resource-button {
+      background-color: #0b66c2;
+      color: white;
+      padding: 0.6rem 1rem;
+      border-radius: 6px;
+      border: none;
+      cursor: pointer;
+      font-size: 0.9rem;
+      transition: background-color 0.3s;
+      white-space: nowrap;
+    }
+
+    .resource-button:hover {
+      background-color: #004184;
+    }
+
+    .resource-button a {
+      color: white;
+      text-decoration: none;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
   </style>
 </head>
 <body>
+  <h2>Filter to Find Your Resource:</h2>
+  <div class="filter-bar">
+    <div class="filter-section">
+      <h4>Role</h4>
+      <div class="pill-group" id="role-filter">
+        <span class="pill" data-value="AD" style="background-color:#f7eaaa;">AD</span>
+        <span class="pill" data-value="AE" style="background-color:#dde7f1;">AE</span>
+      </div>
+    </div>
 
-<h2>Filter to Find Your Resource:</h2>
+    <div class="filter-section">
+      <h4>Segment</h4>
+      <div class="pill-group" id="segment-filter">
+        <span class="pill" data-value="SMB">SMB</span>
+        <span class="pill" data-value="MM">MM</span>
+        <span class="pill" data-value="ENT">ENT</span>
+        <span class="pill" data-value="LENT">LENT</span>
+        <span class="pill" data-value="GCP">GCP</span>
+      </div>
+    </div>
 
-<div class="section-label">Role</div>
-<div class="filters" id="role-filters"></div>
+    <div class="filter-section">
+      <h4>Region</h4>
+      <div class="pill-group" id="region-filter">
+        <span class="pill" data-value="NAMER">NAMER</span>
+        <span class="pill" data-value="EMEAL">EMEAL</span>
+        <span class="pill" data-value="APAC">APAC</span>
+      </div>
+    </div>
 
-<div class="section-label">Segment</div>
-<div class="filters" id="segment-filters"></div>
+    <div class="filter-section">
+      <h4>Resource Type</h4>
+      <div class="pill-group" id="resource-type-filter">
+        <span class="pill" data-value="Template">Templates</span>
+        <span class="pill" data-value="Learnings">Learnings</span>
+        <span class="pill" data-value="Wins">Wins</span>
+      </div>
+    </div>
 
-<div class="section-label">Region</div>
-<div class="filters" id="region-filters"></div>
+    <button class="clear-button" onclick="clearFilters()">Clear</button>
+  </div>
 
-<div class="section-label">Type</div>
-<div class="filters" id="type-filters"></div>
+  <div class="results" id="results"></div>
 
-<div class="section-label">Results</div>
-<div class="resource-list" id="resource-list"></div>
+  <script>
+    const resources = [
+      { name: "SMB Template", role: "AD", segment: "SMB", region: "NAMER", type: "Template", link: "https://linkedin.com" },
+      { name: "ENT Learnings", role: "AD", segment: "ENT", region: "EMEAL", type: "Learnings", link: "https://linkedin.com" },
+      { name: "MM Wins + Template", role: "AE", segment: "MM", region: "APAC", type: "Template", link: "https://linkedin.com" },
+      { name: "LENT Learnings", role: "AE", segment: "LENT", region: "NAMER", type: "Learnings", link: "https://linkedin.com" },
+      { name: "GCP Wins", role: "AD", segment: "GCP", region: "NAMER", type: "Wins", link: "https://linkedin.com" },
+      { name: "EMEAL AE Wins", role: "AE", segment: "MM", region: "EMEAL", type: "Wins", link: "https://linkedin.com" }
+    ];
 
-<script>
-const resources = [
-  {
-    title: "MM Territory Template",
-    link: "https://microsoft.sharepoint.com/:b:/s/ManagingYourBusiness/EWpg9Ybxu_xDpLWQ7Uo2cIUBQOp2RT16NPSgf3w-JAeQvg?e=YdA4cn",
-    role: "AD",
-    segments: ["SMB", "MM", "ENT", "LENT", "GCP"],
-    regions: ["NAMER", "EMEAL", "APAC"],
-    type: "Template"
-  },
-  {
-    title: "SMB Day in the Life",
-    link: "https://microsoft.sharepoint.com/:b:/s/ManagingYourBusiness/EbxaaWIXLldMk2kbpDQAzg4B_Bz1Ni4SH-Irx82UilZSTQ?",
-    role: "AD",
-    segments: ["SMB", "MM"],
-    regions: ["NAMER", "EMEAL", "APAC"],
-    type: "Wins"
-  },
-  {
-    title: "Marketing Sponsored Programs",
-    link: "https://linkedin.com",
-    role: "AE",
-    segments: ["SMB", "ENT"],
-    regions: ["NAMER"],
-    type: "Template"
-  },
-  {
-    title: "MyBook TAP Planning Guide",
-    link: "https://linkedin.com",
-    role: "AE",
-    segments: ["MM", "LENT"],
-    regions: ["EMEAL", "APAC"],
-    type: "Wins"
-  },
-  {
-    title: "Sales Nave Crash Course",
-    link: "https://linkedin.com",
-    role: "AD",
-    segments: ["GCP"],
-    regions: ["NAMER"],
-    type: "Learnings"
-  },
-  {
-    title: "Hosting Executive Engagements",
-    link: "https://linkedin.com",
-    role: "AE",
-    segments: ["SMB", "MM", "ENT"],
-    regions: ["NAMER", "EMEAL", "APAC"],
-    type: "Learnings"
-  },
-  {
-    title: "Hear from your Peers",
-    link: "https://linkedin.com",
-    role: "AD",
-    segments: ["MM", "ENT"],
-    regions: ["EMEAL"],
-    type: "Template"
-  }
-];
+    let activeRole = "", activeSegment = "", activeRegion = "", activeType = "";
 
-const roleFilters = ["AD", "AE"];
-const segmentFilters = ["SMB", "MM", "ENT", "LENT", "GCP"];
-const regionFilters = ["NAMER", "EMEAL", "APAC"];
-const typeFilters = ["Template", "Wins", "Learnings"];
+    const rolePills = document.querySelectorAll('#role-filter .pill');
+    const segmentPills = document.querySelectorAll('#segment-filter .pill');
+    const regionPills = document.querySelectorAll('#region-filter .pill');
+    const typePills = document.querySelectorAll('#resource-type-filter .pill');
+    const resultsDiv = document.getElementById('results');
 
-let selectedFilters = {
-  role: null,
-  segments: [],
-  regions: [],
-  type: null
-};
+    function clearFilters() {
+      activeRole = activeSegment = activeRegion = activeType = "";
+      [...rolePills, ...segmentPills, ...regionPills, ...typePills].forEach(p => p.classList.remove('active'));
+      updateResults();
+    }
 
-function createFilterButtons(filterArr, containerId, category) {
-  const container = document.getElementById(containerId);
-  filterArr.forEach(filter => {
-    const btn = document.createElement("button");
-    btn.textContent = filter;
-    btn.className = "filter-btn";
-    btn.onclick = () => {
-      if (category === "segments" || category === "regions") {
-        selectedFilters[category] = selectedFilters[category].includes(filter)
-          ? selectedFilters[category].filter(f => f !== filter)
-          : [...selectedFilters[category], filter];
-      } else {
-        selectedFilters[category] = selectedFilters[category] === filter ? null : filter;
+    function handleFilter(pills, key) {
+      pills.forEach(pill => {
+        pill.addEventListener('click', () => {
+          const val = pill.getAttribute('data-value');
+          if (window[`active${key}`] === val) {
+            window[`active${key}`] = "";
+            pill.classList.remove('active');
+          } else {
+            window[`active${key}`] = val;
+            pills.forEach(p => p.classList.remove('active'));
+            pill.classList.add('active');
+          }
+          updateResults();
+        });
+      });
+    }
+
+    handleFilter(rolePills, "Role");
+    handleFilter(segmentPills, "Segment");
+    handleFilter(regionPills, "Region");
+    handleFilter(typePills, "Type");
+
+    function updateResults() {
+      resultsDiv.innerHTML = "";
+      const filtered = resources.filter(r => {
+        return (!activeRole || r.role === activeRole) &&
+               (!activeSegment || r.segment === activeSegment) &&
+               (!activeRegion || r.region === activeRegion) &&
+               (!activeType || r.type === activeType);
+      });
+
+      if (filtered.length === 0) {
+        resultsDiv.innerHTML = "<p>No resources found.</p>";
+        return;
       }
-      updateFilterUI();
-      renderResources();
-    };
-    container.appendChild(btn);
-  });
-}
 
-function updateFilterUI() {
-  document.querySelectorAll(".filter-btn").forEach(btn => {
-    const category = btn.parentElement.id.replace("-filters", "");
-    const value = btn.textContent;
-    const isActive = (category === "segments" || category === "regions")
-      ? selectedFilters[category].includes(value)
-      : selectedFilters[category] === value;
-    btn.classList.toggle("active", isActive);
-  });
-}
+      filtered.forEach(resource => {
+        const btn = document.createElement('button');
+        btn.className = 'resource-button';
+        btn.innerHTML = `<a href="${resource.link}" target="_blank">${resource.name} <span>↗</span></a>`;
+        resultsDiv.appendChild(btn);
+      });
+    }
 
-function renderResources() {
-  const list = document.getElementById("resource-list");
-  list.innerHTML = "";
-
-  const filtered = resources.filter(res => {
-    const roleMatch = !selectedFilters.role || res.role === selectedFilters.role;
-    const segmentMatch = selectedFilters.segments.length === 0 || selectedFilters.segments.some(seg => res.segments.includes(seg));
-    const regionMatch = selectedFilters.regions.length === 0 || selectedFilters.regions.some(reg => res.regions.includes(reg));
-    const typeMatch = !selectedFilters.type || res.type === selectedFilters.type;
-    return roleMatch && segmentMatch && regionMatch && typeMatch;
-  });
-
-  if (filtered.length === 0) {
-    list.innerHTML = "<p>No matching resources.</p>";
-    return;
-  }
-
-  filtered.forEach(res => {
-    const a = document.createElement("a");
-    a.href = res.link;
-    a.target = "_blank";
-    a.className = "resource-item";
-    a.textContent = res.title;
-    list.appendChild(a);
-  });
-}
-
-createFilterButtons(roleFilters, "role-filters", "role");
-createFilterButtons(segmentFilters, "segment-filters", "segments");
-createFilterButtons(regionFilters, "region-filters", "regions");
-createFilterButtons(typeFilters, "type-filters", "type");
-
-renderResources();
-</script>
-
+    updateResults();
+  </script>
 </body>
 </html>
-
