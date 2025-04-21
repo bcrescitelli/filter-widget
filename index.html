@@ -1,290 +1,219 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <meta http-equiv="Content-Style-Type" content="text/css">
-  <title></title>
-  <meta name="Generator" content="Cocoa HTML Writer">
-  <meta name="CocoaVersion" content="2575.4">
-  <style type="text/css">
-    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 14.7px Arial; -webkit-text-stroke: #000000}
-    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times; -webkit-text-stroke: #000000; min-height: 14.0px}
-    span.s1 {font-kerning: none}
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Filter to Find Your Resource</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background-color: #fcfaf4;
+      padding: 20px;
+    }
+    h2 {
+      color: #0b66c2;
+    }
+    .filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    .filter-btn {
+      border: none;
+      padding: 8px 12px;
+      border-radius: 999px;
+      cursor: pointer;
+      font-size: 14px;
+      background-color: #e8f3ff;
+      color: #004184;
+    }
+    .filter-btn.active {
+      font-weight: bold;
+      outline: 2px solid #0b66c2;
+    }
+    .resource-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .resource-item {
+      background: none;
+      border: 1px solid #0b66c2;
+      padding: 10px 14px;
+      border-radius: 999px;
+      font-size: 14px;
+      text-decoration: none;
+      color: #0b66c2;
+      transition: background 0.2s;
+    }
+    .resource-item:hover {
+      background: #e8f3ff;
+    }
+    .section-label {
+      margin-top: 10px;
+      font-weight: bold;
+    }
   </style>
 </head>
 <body>
-<p class="p1"><span class="s1"><b>Territory and Account Planning HTML for SharePoint</b><b></b></span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1"><b>Last Edited: </b>4/21</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1">&lt;!DOCTYPE html&gt;</span></p>
-<p class="p1"><span class="s1">&lt;html lang="en"&gt;</span></p>
-<p class="p1"><span class="s1">&lt;head&gt;</span></p>
-<p class="p1"><span class="s1">  &lt;meta charset="UTF-8"&gt;</span></p>
-<p class="p1"><span class="s1">  &lt;title&gt;Resource Filter&lt;/title&gt;</span></p>
-<p class="p1"><span class="s1">  &lt;style&gt;</span></p>
-<p class="p1"><span class="s1">    body {</span></p>
-<p class="p1"><span class="s1">      font-family: Arial, sans-serif;</span></p>
-<p class="p1"><span class="s1">      background-color: #fcfaf4;</span></p>
-<p class="p1"><span class="s1">      margin: 0;</span></p>
-<p class="p1"><span class="s1">      padding: 1rem;</span></p>
-<p class="p1"><span class="s1">    }</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1">    h2 {</span></p>
-<p class="p1"><span class="s1">      color: #004184;</span></p>
-<p class="p1"><span class="s1">      font-size: 1.25rem;</span></p>
-<p class="p1"><span class="s1">      margin-bottom: 0.75rem;</span></p>
-<p class="p1"><span class="s1">    }</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1">    .filter-bar {</span></p>
-<p class="p1"><span class="s1">      display: flex;</span></p>
-<p class="p1"><span class="s1">      flex-wrap: nowrap;</span></p>
-<p class="p1"><span class="s1">      gap: 0.5rem;</span></p>
-<p class="p1"><span class="s1">      background-color: #ffffff;</span></p>
-<p class="p1"><span class="s1">      border-radius: 10px;</span></p>
-<p class="p1"><span class="s1">      padding: 1rem;</span></p>
-<p class="p1"><span class="s1">      border: 1px solid #e0e0e0;</span></p>
-<p class="p1"><span class="s1">    }</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1">    .filter-section {</span></p>
-<p class="p1"><span class="s1">      flex: 1 1 0;</span></p>
-<p class="p1"><span class="s1">      min-width: 0;</span></p>
-<p class="p1"><span class="s1">      background-color: #fcfaf4;</span></p>
-<p class="p1"><span class="s1">      border-radius: 8px;</span></p>
-<p class="p1"><span class="s1">      padding: 0.5rem;</span></p>
-<p class="p1"><span class="s1">    }</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1">    .filter-section h4 {</span></p>
-<p class="p1"><span class="s1">      margin: 0 0 0.3rem 0;</span></p>
-<p class="p1"><span class="s1">      color: #004184;</span></p>
-<p class="p1"><span class="s1">      font-size: 0.9rem;</span></p>
-<p class="p1"><span class="s1">    }</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1">    .pill-group {</span></p>
-<p class="p1"><span class="s1">      display: flex;</span></p>
-<p class="p1"><span class="s1">      flex-wrap: wrap;</span></p>
-<p class="p1"><span class="s1">      gap: 0.3rem;</span></p>
-<p class="p1"><span class="s1">    }</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1">    .pill {</span></p>
-<p class="p1"><span class="s1">      color: #004184;</span></p>
-<p class="p1"><span class="s1">      padding: 0.3rem 0.6rem;</span></p>
-<p class="p1"><span class="s1">      border-radius: 9999px;</span></p>
-<p class="p1"><span class="s1">      font-size: 0.75rem;</span></p>
-<p class="p1"><span class="s1">      cursor: pointer;</span></p>
-<p class="p1"><span class="s1">      user-select: none;</span></p>
-<p class="p1"><span class="s1">      border: none;</span></p>
-<p class="p1"><span class="s1">    }</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1">    #segment-filter .pill:nth-child(1) { background-color: #c1edf4; }</span></p>
-<p class="p1"><span class="s1">    #segment-filter .pill:nth-child(2) { background-color: #fbe1d9; }</span></p>
-<p class="p1"><span class="s1">    #segment-filter .pill:nth-child(3) { background-color: #fee2bc; }</span></p>
-<p class="p1"><span class="s1">    #segment-filter .pill:nth-child(4) { background-color: #f7eaaa; }</span></p>
-<p class="p1"><span class="s1">    #segment-filter .pill:nth-child(5) { background-color: #daebd1; }</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1">    #region-filter .pill:nth-child(1) { background-color: #caf1b5; }</span></p>
-<p class="p1"><span class="s1">    #region-filter .pill:nth-child(2) { background-color: #dde7f1; }</span></p>
-<p class="p1"><span class="s1">    #region-filter .pill:nth-child(3) { background-color: #fee2bc; }</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1">    #resource-type-filter .pill:nth-child(1) { background-color: #c1edf4; }</span></p>
-<p class="p1"><span class="s1">    #resource-type-filter .pill:nth-child(2) { background-color: #caf1b5; }</span></p>
-<p class="p1"><span class="s1">    #resource-type-filter .pill:nth-child(3) { background-color: #fbe1d9; }</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1">    .pill.active {</span></p>
-<p class="p1"><span class="s1">      outline: 2px solid #004184;</span></p>
-<p class="p1"><span class="s1">      font-weight: bold;</span></p>
-<p class="p1"><span class="s1">    }</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1">    .clear-button {</span></p>
-<p class="p1"><span class="s1">      background-color: #e0e0e0;</span></p>
-<p class="p1"><span class="s1">      color: #333;</span></p>
-<p class="p1"><span class="s1">      padding: 0.4rem 0.6rem;</span></p>
-<p class="p1"><span class="s1">      border: none;</span></p>
-<p class="p1"><span class="s1">      border-radius: 6px;</span></p>
-<p class="p1"><span class="s1">      cursor: pointer;</span></p>
-<p class="p1"><span class="s1">      font-size: 0.8rem;</span></p>
-<p class="p1"><span class="s1">      height: fit-content;</span></p>
-<p class="p1"><span class="s1">      align-self: flex-start;</span></p>
-<p class="p1"><span class="s1">    }</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1">    .results {</span></p>
-<p class="p1"><span class="s1">      margin-top: 1rem;</span></p>
-<p class="p1"><span class="s1">      display: flex;</span></p>
-<p class="p1"><span class="s1">      flex-wrap: wrap;</span></p>
-<p class="p1"><span class="s1">      gap: 0.5rem;</span></p>
-<p class="p1"><span class="s1">    }</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1">    .resource-button {</span></p>
-<p class="p1"><span class="s1">      background-color: #0b66c2;</span></p>
-<p class="p1"><span class="s1">      color: white;</span></p>
-<p class="p1"><span class="s1">      padding: 0.6rem 1rem;</span></p>
-<p class="p1"><span class="s1">      border-radius: 6px;</span></p>
-<p class="p1"><span class="s1">      border: none;</span></p>
-<p class="p1"><span class="s1">      cursor: pointer;</span></p>
-<p class="p1"><span class="s1">      font-size: 0.9rem;</span></p>
-<p class="p1"><span class="s1">      transition: background-color 0.3s;</span></p>
-<p class="p1"><span class="s1">      white-space: nowrap;</span></p>
-<p class="p1"><span class="s1">    }</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1">    .resource-button:hover {</span></p>
-<p class="p1"><span class="s1">      background-color: #004184;</span></p>
-<p class="p1"><span class="s1">    }</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1">    .resource-button a {</span></p>
-<p class="p1"><span class="s1">      color: white;</span></p>
-<p class="p1"><span class="s1">      text-decoration: none;</span></p>
-<p class="p1"><span class="s1">      display: flex;</span></p>
-<p class="p1"><span class="s1">      justify-content: space-between;</span></p>
-<p class="p1"><span class="s1">      align-items: center;</span></p>
-<p class="p1"><span class="s1">    }</span></p>
-<p class="p1"><span class="s1">  &lt;/style&gt;</span></p>
-<p class="p1"><span class="s1">&lt;/head&gt;</span></p>
-<p class="p1"><span class="s1">&lt;body&gt;</span></p>
-<p class="p1"><span class="s1">  &lt;h2&gt;Filter to Find Your Resource:&lt;/h2&gt;</span></p>
-<p class="p1"><span class="s1">  &lt;div class="filter-bar"&gt;</span></p>
-<p class="p1"><span class="s1">    &lt;div class="filter-section"&gt;</span></p>
-<p class="p1"><span class="s1">      &lt;h4&gt;Role&lt;/h4&gt;</span></p>
-<p class="p1"><span class="s1">      &lt;div class="pill-group" id="role-filter"&gt;</span></p>
-<p class="p1"><span class="s1">        &lt;span class="pill" data-value="AD" style="background-color:#f7eaaa;"&gt;AD&lt;/span&gt;</span></p>
-<p class="p1"><span class="s1">        &lt;span class="pill" data-value="AE" style="background-color:#dde7f1;"&gt;AE&lt;/span&gt;</span></p>
-<p class="p1"><span class="s1">      &lt;/div&gt;</span></p>
-<p class="p1"><span class="s1">    &lt;/div&gt;</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1">    &lt;div class="filter-section"&gt;</span></p>
-<p class="p1"><span class="s1">      &lt;h4&gt;Segment&lt;/h4&gt;</span></p>
-<p class="p1"><span class="s1">      &lt;div class="pill-group" id="segment-filter"&gt;</span></p>
-<p class="p1"><span class="s1">        &lt;span class="pill" data-value="SMB"&gt;SMB&lt;/span&gt;</span></p>
-<p class="p1"><span class="s1">        &lt;span class="pill" data-value="MM"&gt;MM&lt;/span&gt;</span></p>
-<p class="p1"><span class="s1">        &lt;span class="pill" data-value="ENT"&gt;ENT&lt;/span&gt;</span></p>
-<p class="p1"><span class="s1">        &lt;span class="pill" data-value="LENT"&gt;LENT&lt;/span&gt;</span></p>
-<p class="p1"><span class="s1">        &lt;span class="pill" data-value="GCP"&gt;GCP&lt;/span&gt;</span></p>
-<p class="p1"><span class="s1">      &lt;/div&gt;</span></p>
-<p class="p1"><span class="s1">    &lt;/div&gt;</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1">    &lt;div class="filter-section"&gt;</span></p>
-<p class="p1"><span class="s1">      &lt;h4&gt;Region&lt;/h4&gt;</span></p>
-<p class="p1"><span class="s1">      &lt;div class="pill-group" id="region-filter"&gt;</span></p>
-<p class="p1"><span class="s1">        &lt;span class="pill" data-value="NAMER"&gt;NAMER&lt;/span&gt;</span></p>
-<p class="p1"><span class="s1">        &lt;span class="pill" data-value="EMEAL"&gt;EMEAL&lt;/span&gt;</span></p>
-<p class="p1"><span class="s1">        &lt;span class="pill" data-value="APAC"&gt;APAC&lt;/span&gt;</span></p>
-<p class="p1"><span class="s1">      &lt;/div&gt;</span></p>
-<p class="p1"><span class="s1">    &lt;/div&gt;</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1">    &lt;div class="filter-section"&gt;</span></p>
-<p class="p1"><span class="s1">      &lt;h4&gt;Resource Type&lt;/h4&gt;</span></p>
-<p class="p1"><span class="s1">      &lt;div class="pill-group" id="resource-type-filter"&gt;</span></p>
-<p class="p1"><span class="s1">        &lt;span class="pill" data-value="Templates"&gt;Templates&lt;/span&gt;</span></p>
-<p class="p1"><span class="s1">        &lt;span class="pill" data-value="Learnings"&gt;Learnings&lt;/span&gt;</span></p>
-<p class="p1"><span class="s1">        &lt;span class="pill" data-value="Wins"&gt;Wins&lt;/span&gt;</span></p>
-<p class="p1"><span class="s1">      &lt;/div&gt;</span></p>
-<p class="p1"><span class="s1">    &lt;/div&gt;</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1">    &lt;button class="clear-button" onclick="clearFilters()"&gt;Clear&lt;/button&gt;</span></p>
-<p class="p1"><span class="s1">  &lt;/div&gt;</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1">  &lt;div class="results" id="results"&gt;&lt;/div&gt;</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1">  &lt;script&gt;</span></p>
-<p class="p1"><span class="s1">    const rolePills = document.querySelectorAll('#role-filter .pill');</span></p>
-<p class="p1"><span class="s1">    let activeRole = "";</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1">    rolePills.forEach(pill =&gt; {</span></p>
-<p class="p1"><span class="s1">      pill.addEventListener('click', () =&gt; {</span></p>
-<p class="p1"><span class="s1">        activeRole = pill.classList.contains('active') ? "" : pill.getAttribute('data-value');</span></p>
-<p class="p1"><span class="s1">        rolePills.forEach(p =&gt; p.classList.remove('active'));</span></p>
-<p class="p1"><span class="s1">        if (activeRole) pill.classList.add('active');</span></p>
-<p class="p1"><span class="s1">        updateResults();</span></p>
-<p class="p1"><span class="s1">      });</span></p>
-<p class="p1"><span class="s1">    });</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1">    const segmentPills = document.querySelectorAll('#segment-filter .pill');</span></p>
-<p class="p1"><span class="s1">    const regionPills = document.querySelectorAll('#region-filter .pill');</span></p>
-<p class="p1"><span class="s1">    const typePills = document.querySelectorAll('#resource-type-filter .pill');</span></p>
-<p class="p1"><span class="s1">    const resultsDiv = document.getElementById('results');</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1">    const resources = [</span></p>
-<p class="p1"><span class="s1">      { name: "SMB Template", segment: "SMB", region: "NAMER", types: ["Templates"], link: "https://linkedin.com" },</span></p>
-<p class="p1"><span class="s1">      { name: "ENT Template", segment: "ENT", region: "EMEAL", types: ["Learnings"], link: "https://linkedin.com" },</span></p>
-<p class="p1"><span class="s1">      { name: "MM Template", segment: "MM", region: "APAC", types: ["Wins", "Templates"], link: "https://linkedin.com" },</span></p>
-<p class="p1"><span class="s1">      { name: "Sales Navigator One Pager", segment: "LENT", region: "NAMER", types: ["Learnings", "Wins"], link: "https://linkedin.com" }</span></p>
-<p class="p1"><span class="s1">{ name: "Email Templates", segment: "SMB, MM, ENT, LENT, GCP", region: "NAMER, EMEAL, APAC", types: ["Learnings", "Wins"], link: "https://linkedin.com" }</span></p>
-<p class="p1"><span class="s1">{ name: "Sales Navigator One Pager", segment: "LENT", region: "NAMER", types: ["Learnings", "Wins"], link: "https://linkedin.com" }</span></p>
-<p class="p1"><span class="s1">    ];</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1">    let activeSegment = "";</span></p>
-<p class="p1"><span class="s1">    let activeRegion = "";</span></p>
-<p class="p1"><span class="s1">    let activeTypes = [];</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1">    segmentPills.forEach(pill =&gt; {</span></p>
-<p class="p1"><span class="s1">      pill.addEventListener('click', () =&gt; {</span></p>
-<p class="p1"><span class="s1">        activeSegment = pill.classList.contains('active') ? "" : pill.getAttribute('data-value');</span></p>
-<p class="p1"><span class="s1">        segmentPills.forEach(p =&gt; p.classList.remove('active'));</span></p>
-<p class="p1"><span class="s1">        if (activeSegment) pill.classList.add('active');</span></p>
-<p class="p1"><span class="s1">        updateResults();</span></p>
-<p class="p1"><span class="s1">      });</span></p>
-<p class="p1"><span class="s1">    });</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1">    regionPills.forEach(pill =&gt; {</span></p>
-<p class="p1"><span class="s1">      pill.addEventListener('click', () =&gt; {</span></p>
-<p class="p1"><span class="s1">        activeRegion = pill.classList.contains('active') ? "" : pill.getAttribute('data-value');</span></p>
-<p class="p1"><span class="s1">        regionPills.forEach(p =&gt; p.classList.remove('active'));</span></p>
-<p class="p1"><span class="s1">        if (activeRegion) pill.classList.add('active');</span></p>
-<p class="p1"><span class="s1">        updateResults();</span></p>
-<p class="p1"><span class="s1">      });</span></p>
-<p class="p1"><span class="s1">    });</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1">    typePills.forEach(pill =&gt; {</span></p>
-<p class="p1"><span class="s1">      pill.addEventListener('click', () =&gt; {</span></p>
-<p class="p1"><span class="s1">        const type = pill.getAttribute('data-value');</span></p>
-<p class="p1"><span class="s1">        if (pill.classList.contains('active')) {</span></p>
-<p class="p1"><span class="s1">          activeTypes = activeTypes.filter(t =&gt; t !== type);</span></p>
-<p class="p1"><span class="s1">          pill.classList.remove('active');</span></p>
-<p class="p1"><span class="s1">        } else {</span></p>
-<p class="p1"><span class="s1">          activeTypes.push(type);</span></p>
-<p class="p1"><span class="s1">          pill.classList.add('active');</span></p>
-<p class="p1"><span class="s1">        }</span></p>
-<p class="p1"><span class="s1">        updateResults();</span></p>
-<p class="p1"><span class="s1">      });</span></p>
-<p class="p1"><span class="s1">    });</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1">    function clearFilters() {</span></p>
-<p class="p1"><span class="s1">      activeSegment = "";</span></p>
-<p class="p1"><span class="s1">      activeRegion = "";</span></p>
-<p class="p1"><span class="s1">      activeTypes = [];</span></p>
-<p class="p1"><span class="s1">      activeRole = "";</span></p>
-<p class="p1"><span class="s1">      [...rolePills, ...segmentPills, ...regionPills, ...typePills].forEach(p =&gt; p.classList.remove('active'));</span></p>
-<p class="p1"><span class="s1">      updateResults();</span></p>
-<p class="p1"><span class="s1">    }</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1">    function updateResults() {</span></p>
-<p class="p1"><span class="s1">      resultsDiv.innerHTML = "";</span></p>
-<p class="p1"><span class="s1">      const filtered = resources.filter(resource =&gt; {</span></p>
-<p class="p1"><span class="s1">        const matchesSegment = !activeSegment || resource.segment === activeSegment;</span></p>
-<p class="p1"><span class="s1">        const matchesRegion = !activeRegion || resource.region === activeRegion;</span></p>
-<p class="p1"><span class="s1">        const matchesTypes = activeTypes.length === 0 || activeTypes.some(t =&gt; resource.types.includes(t));</span></p>
-<p class="p1"><span class="s1">        const matchesRole = true; // Update this logic if you add role-based filtering to resources</span></p>
-<p class="p1"><span class="s1">        return matchesSegment &amp;&amp; matchesRegion &amp;&amp; matchesTypes &amp;&amp; matchesRole;</span></p>
-<p class="p1"><span class="s1">      });</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1">      if (filtered.length === 0) {</span></p>
-<p class="p1"><span class="s1">        resultsDiv.innerHTML = "&lt;p&gt;No resources found.&lt;/p&gt;";</span></p>
-<p class="p1"><span class="s1">        return;</span></p>
-<p class="p1"><span class="s1">      }</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1">      filtered.forEach(resource =&gt; {</span></p>
-<p class="p1"><span class="s1">        const btn = document.createElement('button');</span></p>
-<p class="p1"><span class="s1">        btn.className = 'resource-button';</span></p>
-<p class="p1"><span class="s1">        btn.innerHTML = `&lt;a href="${resource.link}" target="_blank"&gt;${resource.name} &lt;span&gt;↗&lt;/span&gt;&lt;/a&gt;`;</span></p>
-<p class="p1"><span class="s1">        resultsDiv.appendChild(btn);</span></p>
-<p class="p1"><span class="s1">      });</span></p>
-<p class="p1"><span class="s1">    }</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p1"><span class="s1">    updateResults();</span></p>
-<p class="p1"><span class="s1">  &lt;/script&gt;</span></p>
-<p class="p1"><span class="s1">&lt;/body&gt;</span></p>
-<p class="p1"><span class="s1">&lt;/html&gt;</span></p>
-<p class="p2"><span class="s1"></span><br></p>
-<p class="p2"><span class="s1"></span><br></p>
+
+<h2>Filter to Find Your Resource:</h2>
+
+<div class="section-label">Role</div>
+<div class="filters" id="role-filters"></div>
+
+<div class="section-label">Segment</div>
+<div class="filters" id="segment-filters"></div>
+
+<div class="section-label">Region</div>
+<div class="filters" id="region-filters"></div>
+
+<div class="section-label">Type</div>
+<div class="filters" id="type-filters"></div>
+
+<div class="section-label">Results</div>
+<div class="resource-list" id="resource-list"></div>
+
+<script>
+const resources = [
+  {
+    title: "Template",
+    link: "https://microsoft.sharepoint.com/:b:/s/ManagingYourBusiness/EWpg9Ybxu_xDpLWQ7Uo2cIUBQOp2RT16NPSgf3w-JAeQvg?e=YdA4cn",
+    role: "AD",
+    segments: ["SMB", "MM", "ENT", "LENT", "GCP"],
+    regions: ["NAMER", "EMEAL", "APAC"],
+    type: "Template"
+  },
+  {
+    title: "Wins",
+    link: "https://microsoft.sharepoint.com/:b:/s/ManagingYourBusiness/EbxaaWIXLldMk2kbpDQAzg4B_Bz1Ni4SH-Irx82UilZSTQ?",
+    role: "AD",
+    segments: ["SMB", "MM"],
+    regions: ["NAMER", "EMEAL", "APAC"],
+    type: "Wins"
+  },
+  {
+    title: "Template",
+    link: "https://linkedin.com",
+    role: "AE",
+    segments: ["SMB", "ENT"],
+    regions: ["NAMER"],
+    type: "Template"
+  },
+  {
+    title: "Wins",
+    link: "https://linkedin.com",
+    role: "AE",
+    segments: ["MM", "LENT"],
+    regions: ["EMEAL", "APAC"],
+    type: "Wins"
+  },
+  {
+    title: "Learnings",
+    link: "https://linkedin.com",
+    role: "AD",
+    segments: ["GCP"],
+    regions: ["NAMER"],
+    type: "Learnings"
+  },
+  {
+    title: "Learnings",
+    link: "https://linkedin.com",
+    role: "AE",
+    segments: ["SMB", "MM", "ENT"],
+    regions: ["NAMER", "EMEAL", "APAC"],
+    type: "Learnings"
+  },
+  {
+    title: "Template",
+    link: "https://linkedin.com",
+    role: "AD",
+    segments: ["MM", "ENT"],
+    regions: ["EMEAL"],
+    type: "Template"
+  }
+];
+
+const roleFilters = ["AD", "AE"];
+const segmentFilters = ["SMB", "MM", "ENT", "LENT", "GCP"];
+const regionFilters = ["NAMER", "EMEAL", "APAC"];
+const typeFilters = ["Template", "Wins", "Learnings"];
+
+let selectedFilters = {
+  role: null,
+  segments: [],
+  regions: [],
+  type: null
+};
+
+function createFilterButtons(filterArr, containerId, category) {
+  const container = document.getElementById(containerId);
+  filterArr.forEach(filter => {
+    const btn = document.createElement("button");
+    btn.textContent = filter;
+    btn.className = "filter-btn";
+    btn.onclick = () => {
+      if (category === "segments" || category === "regions") {
+        selectedFilters[category] = selectedFilters[category].includes(filter)
+          ? selectedFilters[category].filter(f => f !== filter)
+          : [...selectedFilters[category], filter];
+      } else {
+        selectedFilters[category] = selectedFilters[category] === filter ? null : filter;
+      }
+      updateFilterUI();
+      renderResources();
+    };
+    container.appendChild(btn);
+  });
+}
+
+function updateFilterUI() {
+  document.querySelectorAll(".filter-btn").forEach(btn => {
+    const category = btn.parentElement.id.replace("-filters", "");
+    const value = btn.textContent;
+    const isActive = (category === "segments" || category === "regions")
+      ? selectedFilters[category].includes(value)
+      : selectedFilters[category] === value;
+    btn.classList.toggle("active", isActive);
+  });
+}
+
+function renderResources() {
+  const list = document.getElementById("resource-list");
+  list.innerHTML = "";
+
+  const filtered = resources.filter(res => {
+    const roleMatch = !selectedFilters.role || res.role === selectedFilters.role;
+    const segmentMatch = selectedFilters.segments.length === 0 || selectedFilters.segments.some(seg => res.segments.includes(seg));
+    const regionMatch = selectedFilters.regions.length === 0 || selectedFilters.regions.some(reg => res.regions.includes(reg));
+    const typeMatch = !selectedFilters.type || res.type === selectedFilters.type;
+    return roleMatch && segmentMatch && regionMatch && typeMatch;
+  });
+
+  if (filtered.length === 0) {
+    list.innerHTML = "<p>No matching resources.</p>";
+    return;
+  }
+
+  filtered.forEach(res => {
+    const a = document.createElement("a");
+    a.href = res.link;
+    a.target = "_blank";
+    a.className = "resource-item";
+    a.textContent = res.title;
+    list.appendChild(a);
+  });
+}
+
+createFilterButtons(roleFilters, "role-filters", "role");
+createFilterButtons(segmentFilters, "segment-filters", "segments");
+createFilterButtons(regionFilters, "region-filters", "regions");
+createFilterButtons(typeFilters, "type-filters", "type");
+
+renderResources();
+</script>
+
 </body>
 </html>
+
