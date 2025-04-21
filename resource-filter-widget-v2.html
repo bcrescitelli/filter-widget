@@ -1,0 +1,221 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Side Panel Resource Filter</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #fcfaf4;
+            margin: 0;
+            padding: 1rem;
+            display: flex;
+            justify-content: flex-start;
+        }
+
+        .widget-panel {
+            width: 30%;
+            min-width: 280px;
+            background-color: #fcfaf4;
+        }
+
+        h2 {
+            color: #004184;
+        }
+
+        .filter-section {
+            margin-bottom: 1rem;
+        }
+
+        .filter-section h3 {
+            margin: 0.5rem 0;
+            color: #004184;
+        }
+
+        .pill-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .pill {
+            background-color: #0b66c2;
+            color: white;
+            padding: 0.3rem 0.6rem;
+            border-radius: 9999px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .pill.active {
+            background-color: #004184;
+        }
+
+        .resource-button {
+            display: block;
+            width: 100%;
+            background-color: #0b66c2;
+            color: white;
+            text-align: left;
+            padding: 0.8rem;
+            margin: 0.5rem 0;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s;
+            border-radius: 6px;
+        }
+
+        .resource-button:hover {
+            background-color: #004184;
+        }
+
+        .resource-button a {
+            color: white;
+            text-decoration: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .clear-button {
+            background-color: #e0e0e0;
+            color: #333;
+            padding: 0.5rem;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="widget-panel">
+        <h2>Filter Resources</h2>
+        <div class="filter-section">
+            <h3>Segment</h3>
+            <div class="pill-group" id="segment-filter">
+                <span class="pill" data-value="SMB">SMB</span>
+                <span class="pill" data-value="MM">MM</span>
+                <span class="pill" data-value="ENT">ENT</span>
+                <span class="pill" data-value="LENT">LENT</span>
+                <span class="pill" data-value="GCP">GCP</span>
+            </div>
+
+            <h3>Region</h3>
+            <div class="pill-group" id="region-filter">
+                <span class="pill" data-value="NAMER">NAMER</span>
+                <span class="pill" data-value="EMEAL">EMEAL</span>
+                <span class="pill" data-value="APAC">APAC</span>
+            </div>
+
+            <h3>Resource Type</h3>
+            <div class="pill-group" id="resource-type-filter">
+                <span class="pill" data-value="Templates">Templates</span>
+                <span class="pill" data-value="Learnings">Learnings</span>
+                <span class="pill" data-value="Wins">Wins</span>
+            </div>
+
+            <button class="clear-button" onclick="clearFilters()">Clear Filters</button>
+        </div>
+
+        <div id="results">
+            <!-- Results will be injected here -->
+        </div>
+    </div>
+
+    <script>
+        const segmentPills = document.querySelectorAll('#segment-filter .pill');
+        const regionPills = document.querySelectorAll('#region-filter .pill');
+        const typePills = document.querySelectorAll('#resource-type-filter .pill');
+        const resultsDiv = document.getElementById('results');
+
+        const resources = [
+            { name: "Resource 1", segment: "SMB", region: "NAMER", types: ["Templates"], link: "https://linkedin.com" },
+            { name: "Resource 2", segment: "ENT", region: "EMEAL", types: ["Learnings"], link: "https://linkedin.com" },
+            { name: "Resource 3", segment: "MM", region: "APAC", types: ["Wins", "Templates"], link: "https://linkedin.com" },
+            { name: "Resource 4", segment: "LENT", region: "NAMER", types: ["Learnings", "Wins"], link: "https://linkedin.com" }
+        ];
+
+        let activeSegment = "";
+        let activeRegion = "";
+        let activeTypes = [];
+
+        function toggleSingleSelect(pills, clickedPill, group) {
+            group.forEach(p => p.classList.remove('active'));
+            if (clickedPill !== activeSegment && clickedPill !== activeRegion) {
+                clickedPill.classList.add('active');
+            }
+        }
+
+        segmentPills.forEach(pill => {
+            pill.addEventListener('click', () => {
+                activeSegment = pill.classList.contains('active') ? "" : pill.getAttribute('data-value');
+                segmentPills.forEach(p => p.classList.remove('active'));
+                if (activeSegment) pill.classList.add('active');
+                updateResults();
+            });
+        });
+
+        regionPills.forEach(pill => {
+            pill.addEventListener('click', () => {
+                activeRegion = pill.classList.contains('active') ? "" : pill.getAttribute('data-value');
+                regionPills.forEach(p => p.classList.remove('active'));
+                if (activeRegion) pill.classList.add('active');
+                updateResults();
+            });
+        });
+
+        typePills.forEach(pill => {
+            pill.addEventListener('click', () => {
+                const type = pill.getAttribute('data-value');
+                if (pill.classList.contains('active')) {
+                    activeTypes = activeTypes.filter(t => t !== type);
+                    pill.classList.remove('active');
+                } else {
+                    activeTypes.push(type);
+                    pill.classList.add('active');
+                }
+                updateResults();
+            });
+        });
+
+        function clearFilters() {
+            activeSegment = "";
+            activeRegion = "";
+            activeTypes = [];
+            [...segmentPills, ...regionPills, ...typePills].forEach(p => p.classList.remove('active'));
+            updateResults();
+        }
+
+        function updateResults() {
+            resultsDiv.innerHTML = "";
+            const filtered = resources.filter(resource => {
+                const matchesSegment = !activeSegment || resource.segment === activeSegment;
+                const matchesRegion = !activeRegion || resource.region === activeRegion;
+                const matchesTypes = activeTypes.length === 0 || activeTypes.some(t => resource.types.includes(t));
+                return matchesSegment && matchesRegion && matchesTypes;
+            });
+
+            if (filtered.length === 0) {
+                resultsDiv.innerHTML = "<p>No resources found.</p>";
+                return;
+            }
+
+            filtered.forEach(resource => {
+                const btn = document.createElement('button');
+                btn.className = 'resource-button';
+                btn.innerHTML = `<a href="${resource.link}" target="_blank">${resource.name} <span>↗</span></a>`;
+                resultsDiv.appendChild(btn);
+            });
+        }
+
+        updateResults();
+    </script>
+</body>
+</html>
