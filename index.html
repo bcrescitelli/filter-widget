@@ -181,17 +181,22 @@
     }
 
     function handleFilter(groupSelector, key) {
-      const pills = document.querySelectorAll(groupSelector);
-      pills.forEach(pill => {
-        pill.addEventListener('click', () => {
-          const val = pill.dataset.value;
-          window[`active${key}`] = val;
-          pills.forEach(p => p.classList.remove('active'));
-          pill.classList.add('active');
-          updateResults();
-        });
-      });
-    }
+  const pills = document.querySelectorAll(groupSelector);
+  pills.forEach(pill => {
+    pill.addEventListener('click', () => {
+      const val = pill.dataset.value;
+
+      if (key === "role") activeRole = val;
+      if (key === "segment") activeSegment = val;
+      if (key === "region") activeRegion = val;
+      if (key === "type") activeType = val;
+
+      pills.forEach(p => p.classList.remove('active'));
+      pill.classList.add('active');
+      updateResults();
+    });
+  });
+}
 
     handleFilter('#role-filter .pill', 'role');
     handleFilter('#segment-filter .pill', 'segment');
